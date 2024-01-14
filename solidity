@@ -1,0 +1,63 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract EducationVerificationPlatform {
+    address public owner;
+
+    // Struct to represent an educational credential
+    struct Credential {
+        string studentName;
+        string institution;
+        string degree;
+        uint256 issuanceDate;
+    }
+
+    // Mapping to store credentials with a unique identifier
+    mapping(bytes32 => Credential) public credentials;
+
+    // Event to log credential issuance
+    event CredentialIssued(bytes32 indexed credentialId, string studentName, string institution, string degree, uint256 issuanceDate);
+
+    // Modifier to restrict access to the contract owner
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Not the contract owner");
+        _;
+    }
+
+    // Constructor sets the contract owner
+    constructor() {
+        owner = msg.sender;
+    }
+
+    // Function to issue a new educational credential
+    function issueCredential(string memory _studentName, string memory _institution, string memory _degree) public onlyOwner {
+        // Generate a unique credential ID using a combination of inputs
+        bytes32 credentialId = keccak256(abi.encodePacked(_studentName, _institution, _degree, block.timestamp));
+
+        // Ensure the credential ID is not already in use
+        require(credentials[credentialId].issuanceDate == 0, "Credential already issued");
+
+        // Store the credential details
+        credentials[credentialId] = Credential({
+            studentName: _studentName,
+            institution: _institution,
+            degree: _degree,
+            issuanceDate: block.timestamp
+        });
+
+        // Emit an event to log the credential issuance
+        emit CredentialIssued(credentialId, _studentName, _institution, _degree, block.timestamp);
+    }
+
+    // Function to verify a credential by its ID
+    function verifyCredential(bytes32 _credentialId) public view returns (string memory, string memory, string memory, uint256) {
+        // Retrieve the credential details
+        Credential memory credential = credentials[_credentialId];
+
+        // Ensure the credential exists
+        require(credential.issuanceDate != 0, "Credential not found");
+
+        // Return the credential details
+        return (credential.studentName, credential.institution, credential.degree, credential.issuanceDate);
+    }
+}
