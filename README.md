@@ -1,5 +1,1 @@
-# Hi there 👋
-
-I participarted in **Hacktoberfest2025!
-
-[![Hacktoberfest Badge](https://www.holopin.io/hacktoberfest2025/userbadge/cmg94dlil0055l4043y13ssi1?balloons=true)](https://www.holopin.io/hacktoberfest2025/userbadge/cmg94dlil0055l4043y13ssi1?balloons=true)
+Hi, I'm Enock Juma, a Software Developer and a Junior Cybersecurity Engineer from Eldoret Kenya. I build secure, scalable web applications and enjoy developing business systems, fintech solutions, and AI-powered tools. My interests include software engineering, cybersecurity, web technologies, API development, and solving real-world problems through technology.
